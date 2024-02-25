@@ -10,7 +10,7 @@ ALGORITHM :
 
 Step 1 : 
 
-Design of Caeser Cipher algorithm .
+Design of Ceaser Cipher algorithm .
 
 Step 2 :
 
