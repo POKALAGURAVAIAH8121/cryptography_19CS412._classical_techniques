@@ -1,460 +1,481 @@
 # Cryptography---19CS412-classical-techqniques
 
-CEASER CIPHER:
+## CEASER CIPHER:
 
 AIM : 
 
-To develope a simple Python program to implement ceaser cipher.
+To implement the simple substitution technique named Caesar cipher using C
+language.
+
 
 ALGORITHM :
 
 Step 1 : 
 
-Design of Ceaser Cipher algorithm .
+Read the plain text from the user.
 
 Step 2 :
 
-Implementation using pyhton code . 
+ Read the key value from the user
 
 Step 3 :
 
-Testing algorithm with different key values .
+If the key is positive then encrypt the text by adding the key with
+each character in the plain text
+
+Step 4 :
+
+Else subtract the key from the plain text.
+
+Step 5 :
+
+Display the cipher text obtained above.
+
 
 PROGRAM : 
 
 ```
+#include<stdio.h>
+#include <string.h>
+#include<conio.h>
+#include <ctype.h>
+int main()
+{
+char plain[10], cipher[10];
+int key,i,length;
+int result;
+printf("\n Enter the plain text:");
+scanf("%s", plain);
+printf("\n Enter the key value:");
+scanf("%d", &key);
+printf("\n \n \t PLAIN TEXt: %s",plain);
+printf("\n \n \t ENCRYPTED TEXT: ");
+for(i = 0, length = strlen(plain); i < length; i++)
+{
+cipher[i]=plain[i] + key;
+if (isupper(plain[i]) && (cipher[i] > 'Z'))
+cipher[i] = cipher[i] - 26;
+if (islower(plain[i]) && (cipher[i] > 'z'))
+cipher[i] = cipher[i] - 26;
+printf("%c", cipher[i]);
+}
+printf("\n \n \t AFTER DECRYPTION : ");
+for(i=0;i<length;i++)
+{
+plain[i]=cipher[i]-key;
+if(isupper(cipher[i])&&(plain[i]<'A'))
+plain[i]=plain[i]+26;
+if(islower(cipher[i])&&(plain[i]<'a'))
+plain[i]=plain[i]+26;
+printf("%c",plain[i]);
+}
+return 0;
+}
 
-def encrypt(text,s):
-	result = ""
-
-
-	for i in range(len(text)):
-		char = text[i]
-
-	
-		if (char.isupper()):
-			result += chr((ord(char) + s-65) % 26 + 65)
-
-		
-		else:
-			result += chr((ord(char) + s - 97) % 26 + 97)
-
-	return result
-
-
-text = "ALLUGURICHARANTEJA"
-s = 4
-print ("Text : " + text)
-print ("Shift : " + str(s))
-print ("Cipher: " + encrypt(text,s))
 
 ```
 
 OUTPUT :
 
-<img width="320" alt="image" src="https://github.com/AlluguriSrikrishnateja/cryptography_19CS412_classical_techniques/assets/118343892/18258d1e-3995-4cad-9b68-b577252e770f">
+<img width="365" alt="image" src="https://github.com/AlluguriSrikrishnateja/cryptography_19CS412_classical_techniques/assets/118343892/d38dd9a3-4ac3-421b-af80-0240df7aa8c9">
+
 
 
 RESULT : 
 
-Thus , The program is executed perfectly and output is verified. 
+Thus the implementation of Caesar cipher had been executed successfully
 
 
 
 
-PLAYFAIR CIPHER: 
+## PLAYFAIR CIPHER: 
 
 AIM :
 
-To develop a simple Python Program to implement PlayFair Cipher.
+To write a C program to implement the Playfair Substitution technique.
 
 ALGORITHM :
 
 Step 1 :
 
-Design of PlayFair Cipher algorithm.
+Read the plain text from the user
 
 Step 2 :
 
-Now implement the Python program. 
+Read the keyword from the user 
 
 Step 3 :
 
-Testing algorithm with different key values. 
+ Arrange the keyword without duplicates in a 5*5 matrix in the row
+ 
+order and fill the remaining cells with missed out letters in
+
+alphabetical order. Note that ‘i’ and ‘j’ takes the same cell. 
+
+Step 4 :
+
+Group the plain text in pairs and match the corresponding corner
+
+letters by forming a rectangular grid.
+
+step 5 :
+
+Display the obtained cipher text
 
 PROGRAM : 
 
 ```
-
+#include<stdio.h>
+#include<conio.h>
+#include<string.h>
+#include<ctype.h>
+#define MX 5
+void playfair(char ch1,char ch2, char key[MX][MX])
+{
+int i,j,w,x,y,z;
+FILE *out;
+if((out=fopen("cipher.txt","a+"))==NULL)
+{
+printf("File Corrupted.");
+}
+for(i=0;i<MX;i++)
+{
+for(j=0;j<MX;j++)
+{
+if(ch1==key[i][j])
+{
+w=i;
+x=j;
+}
+else if(ch2==key[i][j])
+{
+y=i;
+z=j;
+}}}
+//printf("%d%d %d%d",w,x,y,z);
+if(w==y)
+{
+x=(x+1)%5;z=(z+1)%5;
+printf("%c%c",key[w][x],key[y][z]);
+fprintf(out, "%c%c",key[w][x],key[y][z]);
+}
+else if(x==z)
+{
+w=(w+1)%5;y=(y+1)%5;
+printf("%c%c",key[w][x],key[y][z]);
+fprintf(out, "%c%c",key[w][x],key[y][z]);
+}
+else
+{
+printf("%c%c",key[w][z],key[y][x]);
+fprintf(out, "%c%c",key[w][z],key[y][x]);
+}
+fclose(out);
+}
+int main()
+{
+int i,j,k=0,l,m=0,n;
+char key[MX][MX],keyminus[25],keystr[10],str[25]={0};
+char
+alpa[26]={'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+printf("\nEnter key:");
+gets(keystr);
+printf("\nEnter the plain text:");
+gets(str);
+n=strlen(keystr);
+//convert the characters to uppertext
+for (i=0; i<n; i++)
+{
+if(keystr[i]=='j')keystr[i]='i';
+else if(keystr[i]=='J')keystr[i]='I';
+keystr[i] = toupper(keystr[i]);
+}
+//convert all the characters of plaintext to uppertext
+for (i=0; i<strlen(str); i++)
+{
+if(str[i]=='j')str[i]='i';
+else if(str[i]=='J')str[i]='I';
+str[i] = toupper(str[i]);
+}
+j=0;
+for(i=0;i<26;i++)
+{
+for(k=0;k<n;k++)
+{
+if(keystr[k]==alpa[i])
+break;
+else if(alpa[i]=='J')
+break;
+}
+if(k==n)
+{
+keyminus[j]=alpa[i];j++;
+}
+}
+//construct key keymatrix
+k=0;
+for(i=0;i<MX;i++)
+{
+for(j=0;j<MX;j++)
+{
+if(k<n)
+{
+key[i][j]=keystr[k];
+k++;}
+else
+{
+key[i][j]=keyminus[m];m++;
+}
+printf("%c ",key[i][j]);
+}
+printf("\n");
+}
+printf("\n\nEntered text :%s\nCipher Text :",str);
+for(i=0;i<strlen(str);i++)
+{
+if(str[i]=='J')str[i]='I';
+if(str[i+1]=='\0')
+playfair(str[i],'X',key);
+else
+{
+if(str[i+1]=='J')str[i+1]='I';
+if(str[i]==str[i+1])
+playfair(str[i],'X',key);
+else
+{
+playfair(str[i],str[i+1],key);
+i++;
+}}
+}
+return 0;
+}
  
-def toLowerCase(text):
-    return text.lower()
- 
-# Function to remove all spaces in a string
- 
- 
-def removeSpaces(text):
-    newText = ""
-    for i in text:
-        if i == " ":
-            continue
-        else:
-            newText = newText + i
-    return newText
- 
-# Function to group 2 elements of a string
-# as a list element
- 
- 
-def Diagraph(text):
-    Diagraph = []
-    group = 0
-    for i in range(2, len(text), 2):
-        Diagraph.append(text[group:i])
- 
-        group = i
-    Diagraph.append(text[group:])
-    return Diagraph
- 
-# Function to fill a letter in a string element
-# If 2 letters in the same string matches
- 
- 
-def FillerLetter(text):
-    k = len(text)
-    if k % 2 == 0:
-        for i in range(0, k, 2):
-            if text[i] == text[i+1]:
-                new_word = text[0:i+1] + str('x') + text[i+1:]
-                new_word = FillerLetter(new_word)
-                break
-            else:
-                new_word = text
-    else:
-        for i in range(0, k-1, 2):
-            if text[i] == text[i+1]:
-                new_word = text[0:i+1] + str('x') + text[i+1:]
-                new_word = FillerLetter(new_word)
-                break
-            else:
-                new_word = text
-    return new_word
- 
- 
-list1 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l', 'm',
-         'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
- 
-# Function to generate the 5x5 key square matrix
- 
- 
-def generateKeyTable(word, list1):
-    key_letters = []
-    for i in word:
-        if i not in key_letters:
-            key_letters.append(i)
- 
-    compElements = []
-    for i in key_letters:
-        if i not in compElements:
-            compElements.append(i)
-    for i in list1:
-        if i not in compElements:
-            compElements.append(i)
- 
-    matrix = []
-    while compElements != []:
-        matrix.append(compElements[:5])
-        compElements = compElements[5:]
- 
-    return matrix
- 
- 
-def search(mat, element):
-    for i in range(5):
-        for j in range(5):
-            if(mat[i][j] == element):
-                return i, j
- 
- 
-def encrypt_RowRule(matr, e1r, e1c, e2r, e2c):
-    char1 = ''
-    if e1c == 4:
-        char1 = matr[e1r][0]
-    else:
-        char1 = matr[e1r][e1c+1]
- 
-    char2 = ''
-    if e2c == 4:
-        char2 = matr[e2r][0]
-    else:
-        char2 = matr[e2r][e2c+1]
- 
-    return char1, char2
- 
- 
-def encrypt_ColumnRule(matr, e1r, e1c, e2r, e2c):
-    char1 = ''
-    if e1r == 4:
-        char1 = matr[0][e1c]
-    else:
-        char1 = matr[e1r+1][e1c]
- 
-    char2 = ''
-    if e2r == 4:
-        char2 = matr[0][e2c]
-    else:
-        char2 = matr[e2r+1][e2c]
- 
-    return char1, char2
- 
- 
-def encrypt_RectangleRule(matr, e1r, e1c, e2r, e2c):
-    char1 = ''
-    char1 = matr[e1r][e2c]
- 
-    char2 = ''
-    char2 = matr[e2r][e1c]
- 
-    return char1, char2
- 
- 
-def encryptByPlayfairCipher(Matrix, plainList):
-    CipherText = []
-    for i in range(0, len(plainList)):
-        c1 = 0
-        c2 = 0
-        ele1_x, ele1_y = search(Matrix, plainList[i][0])
-        ele2_x, ele2_y = search(Matrix, plainList[i][1])
- 
-        if ele1_x == ele2_x:
-            c1, c2 = encrypt_RowRule(Matrix, ele1_x, ele1_y, ele2_x, ele2_y)
-            # Get 2 letter cipherText
-        elif ele1_y == ele2_y:
-            c1, c2 = encrypt_ColumnRule(Matrix, ele1_x, ele1_y, ele2_x, ele2_y)
-        else:
-            c1, c2 = encrypt_RectangleRule(
-                Matrix, ele1_x, ele1_y, ele2_x, ele2_y)
- 
-        cipher = c1 + c2
-        CipherText.append(cipher)
-    return CipherText
- 
- 
-text_Plain = 'instruments'
-text_Plain = removeSpaces(toLowerCase(text_Plain))
-PlainTextList = Diagraph(FillerLetter(text_Plain))
-if len(PlainTextList[-1]) != 2:
-    PlainTextList[-1] = PlainTextList[-1]+'z'
- 
-key = "Monarchy"
-print("Key text:", key)
-key = toLowerCase(key)
-Matrix = generateKeyTable(key, list1)
- 
-print("Plain Text:", text_Plain)
-CipherList = encryptByPlayfairCipher(Matrix, PlainTextList)
- 
-CipherText = ""
-for i in CipherList:
-    CipherText += i
-print("CipherText:", CipherText)
 
 ```
 
 OUTPUT :
 
-<img width="273" alt="image" src="https://github.com/AlluguriSrikrishnateja/cryptography_19CS412_classical_techniques/assets/118343892/3c257fd3-9dfb-4f10-b8a3-6e1520e53d1d">
+<img width="356" alt="image" src="https://github.com/AlluguriSrikrishnateja/cryptography_19CS412_classical_techniques/assets/118343892/dc34a668-eaa6-43ef-ad40-c2e971429816">
+
 
 
 RESULT :
-
-Thus , The program is executed perfectly and output is verified. 
-
+ Thus the Playfair cipher substitution technique had been implemented successfully.
 
 
-HILL CIPHER 
+
+## HILL CIPHER 
 
 AIM : 
 
-To develop a simple Python Program to implement Hill Cipher.
+To write a C program to implement the hill cipher substitution techniques.
+
 
 ALGORITHM :
 
 Step 1 :
 
-First, develop the hill cipher program and design it.
+Read the plain text and key from the user.
 
 Step 2 :
 
-Now, implement the Python Program for the Hill Cipher Algorithm.
+Split the plain text into groups of length three
+
 
 Step 3 :
 
-Now, Make a Test for the different key values.
+Arrange the keyword in a 3*3 matrix.
+
+Step 4 :
+
+Multiply the two matrices to obtain the cipher text of length three.
+
+Step 5 :
+
+Combine all these groups to get the complete cipher text.
+
 
 PROGRAM :
 
 ```
- 
-keyMatrix = [[0] * 3 for i in range(3)]
- 
-# Generate vector for the message
-messageVector = [[0] for i in range(3)]
- 
-# Generate vector for the cipher
-cipherMatrix = [[0] for i in range(3)]
- 
-# Following function generates the
-# key matrix for the key string
-def getKeyMatrix(key):
-    k = 0
-    for i in range(3):
-        for j in range(3):
-            keyMatrix[i][j] = ord(key[k]) % 65
-            k += 1
- 
-# Following function encrypts the message
-def encrypt(messageVector):
-    for i in range(3):
-        for j in range(1):
-            cipherMatrix[i][j] = 0
-            for x in range(3):
-                cipherMatrix[i][j] += (keyMatrix[i][x] *
-                                       messageVector[x][j])
-            cipherMatrix[i][j] = cipherMatrix[i][j] % 26
- 
-def HillCipher(message, key):
- 
-    # Get key matrix from the key string
-    getKeyMatrix(key)
- 
-    # Generate vector for the message
-    for i in range(3):
-        messageVector[i][0] = ord(message[i]) % 65
- 
-    # Following function generates
-    # the encrypted vector
-    encrypt(messageVector)
- 
-    # Generate the encrypted text 
-    # from the encrypted vector
-    CipherText = []
-    for i in range(3):
-        CipherText.append(chr(cipherMatrix[i][0] + 65))
- 
-    # Finally print the ciphertext
-    print("Ciphertext: ", "".join(CipherText))
- 
-# Driver Code
-def main():
- 
-    # Get the message to 
-    # be encrypted
-    message = "ACT"
- 
-    key = "GYBNQKURP"
- 
-    HillCipher(message, key)
- 
-if __name__ == "__main__":
-    main()
- ```
+#include<stdio.h>
+#include<conio.h>
+#include<string.h>
+int main(){
+unsigned int a[3][3]={{6,24,1},{13,16,10},{20,17,15}};
+unsigned int b[3][3]={{8,5,10},{21,8,21},{21,12,8}};
+int i,j, t=0;
+unsigned int c[20],d[20];
+char msg[20];
+printf("Enter plain text: ");
+scanf("%s",msg);
+for(i=0;i<strlen(msg);i++)
+{
+c[i]=msg[i]-65;
+unsigned int a[3][3]={{6,24,1},{13,16,10},{20,17,15}};
+unsigned int b[3][3]={{8,5,10},{21,8,21},{21,12,8}};
+printf("%d ",c[i]);
+}
+for(i=0;i<3;i++)
+{ t=0;
+for(j=0;j<3;j++)
+{
+t=t+(a[i][j]*c[j]);
+}
+d[i]=t%26;
+}
+printf("\nEncrypted Cipher Text :");
+for(i=0;i<3;i++)
+printf(" %c",d[i]+65);
+for(i=0;i<3;i++)
+{
+t=0;
+for(j=0;j<3;j++)
+{
+t=t+(b[i][j]*d[j]);
+}
+c[i]=t%26;
+}
+printf("\nDecrypted Cipher Text :");
+for(i=0;i<3;i++)
+printf(" %c",c[i]+65);
+getch();
+return 0;
+}
+```
 
 OUTPUT :
 
-<img width="290" alt="image" src="https://github.com/AlluguriSrikrishnateja/cryptography_19CS412_classical_techniques/assets/118343892/f81f6436-6f5d-4aff-85c9-ddafe78eaff7">
+<img width="299" alt="image" src="https://github.com/AlluguriSrikrishnateja/cryptography_19CS412_classical_techniques/assets/118343892/d729468c-607b-48cb-b16a-78c6ee4245f2">
+
 
 
 RESULT :
 
-Thus , The program is executed perfectly and output is verified. 
+ Thus the hill cipher substitution technique had been implemented successfully
 
 
 
-Vigenere Cipher 
+## Vigenere Cipher 
 
 
 AIM : 
 
-To develop a simple python program to implement Vigenere Cipher.
+To implement the Vigenere Cipher substitution technique using C program
 
 
 ALGORITHM :
 
 Step 1 :
 
-First, develop the Vigenere cipher program and design it.
+Arrange the alphabets in row and column of a 26*26 matrix
 
 Step 2 : 
 
-Now, implement the Python Program for the Vigenere Cipher Algorithm.
+Circulate the alphabets in each row to position left such that the first letter
+
+is attached to last.
 
 Step 3 :
 
-Now, Make a Test for the different key values.
+Repeat this process for all 26 rows and construct the final key matrix.
 
+Step 4 :
+
+The keyword and the plain text is read from the user.
+
+Step 5 :
+
+The characters in the keyword are repeated sequentially so as to
+
+match with that of the plain text.
+
+Step  6 :
+
+ Pick the first letter of the plain text and that of the keyword as the row
+ 
+indices and column indices respectively.
+
+Step 7 :
+
+The junction character where these two meet forms the cipher character
+
+Step 8 :
+
+Repeat the above steps to generate the entire cipher text.
 
 PROGRAM :
 
 ```
-# Python code to implement
-# Vigenere Cipher
-
-# This function generates the 
-# key in a cyclic manner until 
-# it's length isn't equal to 
-# the length of original text
-def generateKey(string, key):
-	key = list(key)
-	if len(string) == len(key):
-		return(key)
-	else:
-		for i in range(len(string) -
-					len(key)):
-			key.append(key[i % len(key)])
-	return("" . join(key))
-	
-# This function returns the 
-# encrypted text generated 
-# with the help of the key
-def cipherText(string, key):
-	cipher_text = []
-	for i in range(len(string)):
-		x = (ord(string[i]) +
-			ord(key[i])) % 26
-		x += ord('A')
-		cipher_text.append(chr(x))
-	return("" . join(cipher_text))
-	
-# This function decrypts the 
-# encrypted text and returns 
-# the original text
-def originalText(cipher_text, key):
-	orig_text = []
-	for i in range(len(cipher_text)):
-		x = (ord(cipher_text[i]) -
-			ord(key[i]) + 26) % 26
-		x += ord('A')
-		orig_text.append(chr(x))
-	return("" . join(orig_text))
-	
-# Driver code
-if __name__ == "__main__":
-	string = "GEEKSFORGEEKS"
-	keyword = "AYUSH"
-	key = generateKey(string, keyword)
-	cipher_text = cipherText(string,key)
-	print("Ciphertext :", cipher_text)
-	print("Original/Decrypted Text :", 
-		originalText(cipher_text, key))
-
-# This code is contributed 
-# by Pratik Somwanshi
+#include <stdio.h>
+#include<conio.h>
+#include <ctype.h>
+#include <string.h>
+void encipher();
+void decipher();
+int main()
+{
+int choice;
+while(1)
+{
+printf("\n1. Encrypt Text");
+printf("\n2. Decrypt Text");
+printf("\n3. Exit");
+printf("\n\nEnter Your Choice : ");
+scanf("%d",&choice);
+if(choice == 3)
+exit(0);
+else if(choice == 1)
+encipher();
+else if(choice == 2)
+decipher();
+else
+printf("Please Enter Valid Option.");
+}
+}
+void encipher()
+{
+unsigned int i,j;
+char input[50],key[10];
+printf("\n\nEnter Plain Text: ");
+scanf("%s",input);
+printf("\nEnter Key Value: ");
+scanf("%s",key);
+printf("\nResultant Cipher Text: ");
+for(i=0,j=0;i<strlen(input);i++,j++)
+{
+if(j>=strlen(key))
+{ j=0;
+}
+printf("%c",65+(((toupper(input[i])-65)+(toupper(key[j])-
+65))%26));
+}}
+void decipher()
+{
+unsigned int i,j;
+char input[50],key[10];
+int value;
+printf("\n\nEnter Cipher Text: ");
+scanf("%s",input);
+printf("\n\nEnter the key value: ");
+scanf("%s",key);
+for(i=0,j=0;i<strlen(input);i++,j++)
+{
+if(j>=strlen(key))
+{ j=0; }
+value = (toupper(input[i])-64)-(toupper(key[j])-64);
+if( value < 0)
+{ value = value * -1;
+}
+printf("%c",65 + (value % 26));
+}
+return 0;
+}
 ```
 
 OUTPUT :
 
-<img width="310" alt="image" src="https://github.com/AlluguriSrikrishnateja/cryptography_19CS412_classical_techniques/assets/118343892/163346aa-f451-499a-a564-1e0ce44d9650">
+
 
 RESULT :
 
@@ -462,166 +483,99 @@ Thus , The program is executed perfectly and output is verified.
 
 
 
-Rail Fence Cipher
+## Rail Fence Cipher
 
 AIM :
 
-To develop a simple Python program to implement Rail Fence Cipher.
+To write a C program to implement the rail fence transposition technique.
+
 
 ALGORRITHM :
 
 Step 1 :
 
-To develop a simple python program to implement Rail Fence Cipher.
+Read the Plain text.
+
 
 Step 2 :
 
-Now, implement the Python Program for the Rail Fence Cipher Algorithm.
+Arrange the plain text in row columnar matrix format
 
 Step 3 :
 
-Now, Make a Test for the different key values.
+Now read the keyword depending on the number of columns of the plain text
+
+Step 4 :
+
+Arrange the characters of the keyword in sorted order and the
+
+corresponding columns of the plain text.
+
+Step 5 :
+
+Read the characters row wise or column wise in the former order to get the
+
+cipher text.
+
+
 
 
 PROGRAM :
 
 ```
-
-	# Python3 program to illustrate
-# Rail Fence Cipher Encryption
-# and Decryption
-
-# function to encrypt a message
-def encryptRailFence(text, key):
-
-	# create the matrix to cipher
-	# plain text key = rows ,
-	# length(text) = columns
-	# filling the rail matrix
-	# to distinguish filled
-	# spaces from blank ones
-	rail = [['\n' for i in range(len(text))]
-				for j in range(key)]
-	
-	# to find the direction
-	dir_down = False
-	row, col = 0, 0
-	
-	for i in range(len(text)):
-		
-		# check the direction of flow
-		# reverse the direction if we've just
-		# filled the top or bottom rail
-		if (row == 0) or (row == key - 1):
-			dir_down = not dir_down
-		
-		# fill the corresponding alphabet
-		rail[row][col] = text[i]
-		col += 1
-		
-		# find the next row using
-		# direction flag
-		if dir_down:
-			row += 1
-		else:
-			row -= 1
-	# now we can construct the cipher
-	# using the rail matrix
-	result = []
-	for i in range(key):
-		for j in range(len(text)):
-			if rail[i][j] != '\n':
-				result.append(rail[i][j])
-	return("" . join(result))
-	
-# This function receives cipher-text
-# and key and returns the original
-
-def decryptRailFence(cipher, key):
-
-	# create the matrix to cipher
-	# plain text key = rows ,
-	# length(text) = columns
-	# filling the rail matrix to
-
-	rail = [['\n' for i in range(len(cipher))]
-				for j in range(key)]
-	
-	# to find the direction
-	dir_down = None
-	row, col = 0, 0
-	
-	# mark the places with '*'
-	for i in range(len(cipher)):
-		if row == 0:
-			dir_down = True
-		if row == key - 1:
-			dir_down = False
-		
-		# place the marker
-		rail[row][col] = '*'
-		col += 1
-		
-		# find the next row
-		# using direction flag
-		if dir_down:
-			row += 1
-		else:
-			row -= 1
-			
-	# now we can construct the
-	# fill the rail matrix
-	index = 0
-	for i in range(key):
-		for j in range(len(cipher)):
-			if ((rail[i][j] == '*') and
-			(index < len(cipher))):
-				rail[i][j] = cipher[index]
-				index += 1
-		
-	# now read the matrix in
-	# zig-zag manner to construct
-	# the resultant text
-	result = []
-	row, col = 0, 0
-	for i in range(len(cipher)):
-		
-		# check the direction of flow
-		if row == 0:
-			dir_down = True
-		if row == key-1:
-			dir_down = False
-			
-		# place the marker
-		if (rail[row][col] != '*'):
-			result.append(rail[row][col])
-			col += 1
-			
-		# find the next row using
-		# direction flag
-		if dir_down:
-			row += 1
-		else:
-			row -= 1
-	return("".join(result))
-
-# Driver code
-if __name__ == "__main__":
-	print(encryptRailFence("attack at once", 2))
-	print(encryptRailFence("GeeksforGeeks ", 3))
-	print(encryptRailFence("defend the east wall", 3))
-	
-	print(decryptRailFence("GsGsekfrek eoe", 3))
-	print(decryptRailFence("atc toctaka ne", 2))
-	print(decryptRailFence("dnhaweedtees alf tl", 3))
-
+#include<stdio.h>
+#include<conio.h>
+#include<string.h>
+int main()
+{
+int i,j,k,l;
+char a[20],c[20],d[20];
+printf("\n\t\t RAIL FENCE TECHNIQUE");
+printf("\n\nEnter the input string : ");
+gets(a);
+l=strlen(a);
+/Ciphering/
+for(i=0,j=0;i<l;i++)
+{
+if(i%2==0)
+c[j++]=a[i];
+}
+for(i=0;i<l;i++)
+{
+if(i%2==1)
+c[j++]=a[i];
+}
+c[j]='\0';
+printf("\nCipher text after applying rail fence :");
+printf("\n%s",c);
+/Deciphering/
+if(l%2==0)
+k=l/2;
+else
+k=(l/2)+1;
+for(i=0,j=0;i<k;i++)
+{
+d[j]=c[i];
+j=j+2;
+}
+for(i=k,j=1;i<l;i++)
+{
+d[j]=c[i];
+j=j+2;
+}
+d[l]='\0';
+printf("\nText after decryption : ");
+printf("%s",d);
+return 0;
+}
 ```
 
 OUTPUT :
 
-<img width="293" alt="image" src="https://github.com/AlluguriSrikrishnateja/cryptography_19CS412_classical_techniques/assets/118343892/80c42ce4-3e9c-4761-8d9a-8fecb066e5df">
+<img width="347" alt="image" src="https://github.com/AlluguriSrikrishnateja/cryptography_19CS412_classical_techniques/assets/118343892/2f7866e5-d770-4600-9b0d-41efac2debf9">
+
 
 
 RESULT :
 
-Thus , The program is executed perfectly and output is verified.
+Thus the rail fence algorithm had been executed successfully
