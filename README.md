@@ -77,8 +77,7 @@ return 0;
 
 OUTPUT :
 
-<img width="365" alt="image" src="https://github.com/AlluguriSrikrishnateja/cryptography_19CS412_classical_techniques/assets/118343892/d38dd9a3-4ac3-421b-af80-0240df7aa8c9">
-
+![image](https://github.com/POKALAGURAVAIAH8121/cryptography_19CS412._classical_techniques/assets/128034765/94eef66e-0457-4153-83a8-65bd6d000735)
 
 
 RESULT : 
@@ -255,7 +254,7 @@ return 0;
 
 OUTPUT :
 
-<img width="356" alt="image" src="https://github.com/AlluguriSrikrishnateja/cryptography_19CS412_classical_techniques/assets/118343892/dc34a668-eaa6-43ef-ad40-c2e971429816">
+![image](https://github.com/POKALAGURAVAIAH8121/cryptography_19CS412._classical_techniques/assets/128034765/85768e58-ce12-47c7-b458-fbfd959f8fa2)
 
 
 
@@ -346,7 +345,7 @@ return 0;
 
 OUTPUT :
 
-<img width="299" alt="image" src="https://github.com/AlluguriSrikrishnateja/cryptography_19CS412_classical_techniques/assets/118343892/d729468c-607b-48cb-b16a-78c6ee4245f2">
+![image](https://github.com/POKALAGURAVAIAH8121/cryptography_19CS412._classical_techniques/assets/128034765/595f4aac-33e5-4644-8471-dacc732c3a0d)
 
 
 
@@ -475,6 +474,7 @@ return 0;
 
 OUTPUT :
 
+![image](https://github.com/POKALAGURAVAIAH8121/cryptography_19CS412._classical_techniques/assets/128034765/7669f338-a108-4318-8c03-122b7eba9513)
 
 
 RESULT :
@@ -572,7 +572,8 @@ return 0;
 
 OUTPUT :
 
-<img width="347" alt="image" src="https://github.com/AlluguriSrikrishnateja/cryptography_19CS412_classical_techniques/assets/118343892/2f7866e5-d770-4600-9b0d-41efac2debf9">
+![image](https://github.com/POKALAGURAVAIAH8121/cryptography_19CS412._classical_techniques/assets/128034765/763c89a8-965b-4186-a6a9-188ec45f7384)
+
 
 
 
